@@ -1,0 +1,116 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Assets/Sprites/H4/c_idle/c_idle_2.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/H4/c_punch_back/c_punch_back_2.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Sprites/H4/c_idle/c_idle_1.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/H4/c_walk/c_walk_1.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/H4/c_walk/c_walk_2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprites/H4/c_punch_front/c_punch_front_1.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/H4/c_punch_front/c_punch_front_2.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/H4/c_punch_back/c_punch_back_1.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "c_punch_back",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "c_punch_front",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "c_idle",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "c_walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 45.0
+height = 96.0
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 28, 80 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
+position = Vector2( 110, 340 )
+collision_layer = 1025
+script = ExtResource( 3 )
+moveSpeed = 500
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 1, 0 )
+current = true
+zoom = Vector2( 3, 3 )
+smoothing_enabled = true
+drag_margin_left = 0.38
+drag_margin_top = 0.57
+drag_margin_right = 0.69
+drag_margin_bottom = 0.69
+editor_draw_drag_margin = true
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 1, 0 )
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 1 )
+animation = "c_punch_front"
+frame = 1
+playing = true
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -19, 0 )
+shape = SubResource( 2 )
+
+[node name="FrontHand" type="StaticBody2D" parent="."]
+position = Vector2( -31, -13 )
+collision_layer = 2
+collision_mask = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontHand"]
+position = Vector2( -8, 14 )
+shape = SubResource( 3 )
+
+[node name="BackHand" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2( 13, 0 )
+collision_layer = 2
+collision_mask = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackHand"]
+position = Vector2( -50, 6 )
+shape = SubResource( 3 )
+
+[node name="PlayerHealth" type="ProgressBar" parent="." groups=[
+"PlayerHealth",
+]]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -121.0
+margin_top = -137.0
+margin_right = 79.0
+margin_bottom = -107.0
+custom_styles/fg = SubResource( 4 )
+step = 1.0
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

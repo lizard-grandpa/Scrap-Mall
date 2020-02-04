@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Scripts/Spawner.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 246.0
+
+[node name="Spawner" type="Node2D" groups=[
+"Spawner",
+]]
+position = Vector2( -841.009, -679.78 )
+script = ExtResource( 1 )
+numOfToasters = 21
+posRange = Vector2( 300, 300 )
+
+[node name="SpawnToasters" type="Node2D" parent="."]
+position = Vector2( -461, -203 )
+
+[node name="TriggerToasters" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerToasters"]
+position = Vector2( 450, -132 )
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+[connection signal="body_entered" from="TriggerToasters" to="." method="_on_TriggerToasters_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
