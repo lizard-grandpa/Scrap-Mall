@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Sprites/scrapMetal.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Scenes/Scraps.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 10, 9.54068 )
+
+[node name="ScrapsPopups" type="Node2D"]
+
+[node name="Scraps" type="Area2D" parent="."]
+position = Vector2( 520.688, 405.496 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scraps"]
+position = Vector2( 25.95, -194.437 )
+shape = SubResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="Scraps"]
+position = Vector2( 29.7048, -197.533 )
+texture = ExtResource( 1 )
+[connection signal="body_entered" from="Scraps" to="Scraps" method="_on_Scraps_body_entered"]
